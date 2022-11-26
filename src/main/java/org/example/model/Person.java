@@ -18,7 +18,6 @@ public class Person {
 
     @Column(name = "age")
     private int age;
-
     @OneToMany(mappedBy = "owner")
     private List<Item> items;
 
