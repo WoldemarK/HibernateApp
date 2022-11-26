@@ -24,7 +24,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(String name, int age, List<Item> items) {
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
         this.items = items;
@@ -56,6 +56,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return this.name + " " + this.age;
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
