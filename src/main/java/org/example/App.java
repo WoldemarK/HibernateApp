@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class App {
@@ -81,6 +83,16 @@ public class App {
 
             System.out.println(newItem);
 
+            System.out.println("V-----------------------------------------------V");
+
+            Person person3 = new Person("Roki", 34);
+
+            Item item1 = new Item("Item from Hibernate 2", person3);
+
+            person3.setItems(new ArrayList<>(Collections.singleton(item1)));
+
+            session.save(person3);
+            session.save(item1);
 
             session.getTransaction().commit();
         } finally {
