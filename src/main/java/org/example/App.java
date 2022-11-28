@@ -4,6 +4,7 @@ import org.example.model.Item;
 import org.example.model.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class App {
         Session session = sessionFactory.getCurrentSession();
 
         try {
-            session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
 //
 //          List<Person> people = session.createQuery("select p  from Person p").getResultList();
 //          people.forEach(System.out::println);
@@ -56,45 +57,80 @@ public class App {
 //           Person newOlga = session.get(Person.class, 2);
 //           session.delete(newOlga);
 //           session.getTransaction().commit();
-            Person person = session.get(Person.class, 3);
-            System.out.println(person);
+//            System.out.println("V-----------------------------------------------V");
 
-            System.out.println("V-----------------------------------------------V");
+//            Person person = session.get(Person.class, 3);
+//            System.out.println(person);
+//            List<Item> items = person.getItems();
+//            System.out.println(items);
+//
+//            System.out.println("V-----------------------------------------------V");
+//
+//            Item item = session.get(Item.class, 5);
+//            System.out.println(item);
+//
+//            Person person1 = item.getOwner();
+//            System.out.println(person1);
+//
+//            System.out.println("V-----------------------------------------------V");
 
-            List<Item> items = person.getItems();
-            System.out.println(items);
+//            Person person2 = session.get(Person.class, 2);
+//            Item newItem = new Item("Item from Hibernate", person2);
+//
+//            person2.getItems().add(newItem);
+//
+//            session.save(newItem);
+//
+//            System.out.println(newItem);
+//
+//            System.out.println("V-----------------------------------------------V");
+//
+//            Person person3 = new Person("Roki", 34);
+//
+//            Item item1 = new Item("Item from Hibernate 2", person3);
+//
+//            person3.setItems(new ArrayList<>(Collections.singleton(item1)));
+//
+//            session.save(person3);
+//            session.save(item1);
+//
+//            System.out.println("V-----------------------------------------------V");
 
-            System.out.println("V-----------------------------------------------V");
+//            Person p = session.get(Person.class, 3);
+//            List<Item> item2 = p.getItems();
+//
+//            for (Item item3 : item2)
+//                session.remove(item3);
+//
+//            p.getItems().clear();
 
-            Item item = session.get(Item.class, 5);
-            System.out.println(item);
+//            Person person = session.get(Person.class, 2);
+//            session.remove(person);
+//
+//            person.getItems().forEach(i->i.setOwner(null));
+//            System.out.println("V-----------------------------------------------V");
+//
+//            Person person = session.get(Person.class, 4);
+//            Item items = session.get(Item.class, 1);
+//
+//            items.getOwner()
+//                    .getItems()
+//                    .remove(items);
+//
+//            items.setOwner(person);
+//            person.getItems()
+//                    .add(items);
+            Person person = new Person("Bill", 30);
+            Item item = new Item("Car BMW", person);
 
-            System.out.println("V-----------------------------------------------V");
+            person.setItems(new ArrayList<>(Collections.singleton(item)));
 
-            Person person1 = item.getOwner();
-            System.out.println(person1);
+            session.save( person);
 
-            Person person2 = session.get(Person.class, 2);
-            Item newItem = new Item("Item from Hibernate", person2);
 
-            person2.getItems().add(newItem);
+            transaction.commit();
+            session.close();
 
-            session.save(newItem);
-
-            System.out.println(newItem);
-
-            System.out.println("V-----------------------------------------------V");
-
-            Person person3 = new Person("Roki", 34);
-
-            Item item1 = new Item("Item from Hibernate 2", person3);
-
-            person3.setItems(new ArrayList<>(Collections.singleton(item1)));
-
-            session.save(person3);
-            session.save(item1);
-
-            session.getTransaction().commit();
         } finally {
             sessionFactory.close();
         }
