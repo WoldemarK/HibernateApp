@@ -118,12 +118,14 @@ public class App {
 //            person.getItems()
 //                    .add(items);
             Person person = session.get(Person.class, 1);
-            System.out.println(person.getItems());
+            System.out.println(person);
+            Hibernate.initialize(person.getItems());
 
 
             transaction.commit();
             session.close();
 
+            System.out.println(person.getItems());
 
         } finally {
             sessionFactory.close();
